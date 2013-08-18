@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Temp monitor</title>
+        <script language="javascript" type="text/javascript" src="jquery.js"></script>
+	    <script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+	    <script language="javascript" type="text/javascript" src="underscore-min.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                var plot = $.plot("#placeholder", [ [] ], {
+			        series: {
+				        shadowSize: 0	// Drawing is faster without shadows
+			        },
+                    yaxis: {
+                        min: 0,
+                        max: 30
+		        	},
+        			xaxis: {
+                        min: 0,
+                        max: 100
+                    },
+                    lines: {
+				        show: true
+        			},
+          			points: {
+        				show: true
+	        		}
+                }); 
+
+                function update() {
+
+                    $.getJSON("data", function(data) {
+                        plot.setData([ _.sortBy(data, function(pair) { return pair[0]; }) ]);
+                        plot.draw();
+		    	        setTimeout(update, 1000);                      
+                    });
+		        }
+
+                update();
+            });
+        </script>
+    </head>
+    <body>
+        <h1>Temp monitor</h1>
+        <div id="placeholder" style="width: 1400px; height: 500px"></div>
+    </body>
+</html>

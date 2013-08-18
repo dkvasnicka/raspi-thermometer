@@ -1,5 +1,7 @@
 #lang racket
 
+(require (planet dkvasnicka/racket-riak:1:0))
+
 (define path.direction  "/sys/class/gpio/gpio17/direction")
 (define path.value      "/sys/class/gpio/gpio17/value")
 
