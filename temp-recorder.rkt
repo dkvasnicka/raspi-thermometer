@@ -1,6 +1,7 @@
 #lang racket
 
-(require (planet dkvasnicka/racket-riak:1:0))
+(require (planet dkvasnicka/racket-riak:1:0) 
+         json)
 
 (define path.direction  "/sys/class/gpio/gpio17/direction")
 (define path.value      "/sys/class/gpio/gpio17/value")
@@ -10,7 +11,7 @@
 
 (define [check-for-hival init] 
   (if (equal? (call-with-input-file path.value
-                        (lambda [f] (read-string 1 f))) "1")
+                        (λ [f] (read-string 1 f))) "1")
     init
     (check-for-hival (+ init 1))))
 
@@ -29,9 +30,14 @@
   ; Monitor the GPIO pin and read its value. Increment a counter while we wait.
   ; At some point the capacitor voltage will increase enough to be considered as a
   ; High by the GPIO pin (approx 2v). 
-  ; The time taken is proportional to the light level seen by the thermistor.
-  (displayln (check-for-hival 0))
-  (sleep 0.5)
+  ; Save the measurement to the database
+  (let [[data (list 
+               (current-milliseconds) 
+               (exact->inexact (/ 30 (check-for-hival 0))))]]
+    (put-json "temp" data)
+    (displayln data))
+  
+  (sleep 1)
   (main))
 
 (main)
