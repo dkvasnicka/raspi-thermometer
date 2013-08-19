@@ -1,6 +1,6 @@
 #lang racket
 
-(require (planet dkvasnicka/racket-riak:1:0) 
+(require "../racket-riak/main.rkt"
          json)
 
 (define path.direction  "/sys/class/gpio/gpio17/direction")
@@ -32,12 +32,12 @@
   ; High by the GPIO pin (approx 2v). 
   ; Save the measurement to the database
   (let [[data (list 
-               (current-milliseconds) 
+               (current-seconds) 
                (exact->inexact (/ 30 (check-for-hival 0))))]]
     (put-json "temp" data)
     (displayln data))
   
-  (sleep 1)
+  (sleep 1.5)
   (main))
 
 (main)
