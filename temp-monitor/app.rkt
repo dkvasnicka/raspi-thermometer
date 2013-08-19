@@ -4,7 +4,7 @@
          web-server/servlet-env
          web-server/templates
          racket/runtime-path
-         (planet dkvasnicka/racket-riak:1:0))
+         "../../racket-riak/main.rkt")
 
 (define-values [app-routes appurl]
     (dispatch-rules
