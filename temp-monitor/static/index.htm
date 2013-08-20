@@ -10,15 +10,19 @@
             $(function() {
                 var plot = $.plot("#placeholder", [ [] ], {
 			        series: {
-				        shadowSize: 0	// Drawing is faster without shadows
+				        shadowSize: 0
 			        },
                     yaxis: {
                         min: 0,
                         max: 10
 		        	},
-        			xaxis: {
-                        min: 1376915385,
-                        max: 1376916000
+                    xaxis: {
+                        // Flot cannot meaningfully detect the x axis range
+                        // so this has to be changed to where your data currently lie on the time series
+                        // Yeah, this sucks badly. If you want to build anything meaningful off of this PoC,
+                        // feel free to find a reasonable charting framework (D3 perhaps?)
+                        min: 1376922974, 
+                        max: 1376923300
                     },
                     lines: {
 				        show: true

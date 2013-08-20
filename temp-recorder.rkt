@@ -1,5 +1,7 @@
 #lang racket
 
+; If you don't need to change the host and you're OK with
+; 'localhost', you can use the Riak library directly from the PLaneT: (planet dkvasnicka/racket-riak:1:0)
 (require "../racket-riak/main.rkt"
          json)
 
